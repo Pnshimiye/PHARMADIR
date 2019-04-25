@@ -30,7 +30,7 @@ class Med_category(models.Model):
 
 class Medicine(models.Model):
     name = models.CharField(max_length=50)  
-    med_category = models.ForeignKey(Med_category)
+    med_category = models.ForeignKey(Med_category,on_delete=models.PROTECT)
     price = models.IntegerField()
 
     # class Meta:
