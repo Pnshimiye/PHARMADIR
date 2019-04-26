@@ -21,8 +21,7 @@ class Insurance(models.Model):
     name = models.CharField(max_length=50)  
     pharmacy = models.ManyToManyField(Pharmacy)
 
-    # class Meta:
-    #     ordering = ('name')
+    
 
 class Med_category(models.Model):
      name = models.CharField(max_length=50)  
@@ -42,6 +41,24 @@ class Medicine(models.Model):
     @classmethod
     def update_price(cls, update):
         pass  
+
+
+
+class Request(models.Model):    
+    Pharmacy_name = models.CharField(max_length=50) 
+    Prefered_username = models.CharField(max_length=50) 
+    Licence_document = models.ImageField(upload_to='')
+    Pin_number = models.IntegerField()
+    Contact_name = models.CharField(max_length=50) 
+    Contact_Email = models.EmailField() 
+    Contact_phone_number = models.IntegerField()
+    Address = models.CharField(max_length=50) 
+    Request_date = models.DateTimeField(auto_now_add=True)
+
+
+    def save_medecine(self):
+        self.save()
+    
   
 
  
