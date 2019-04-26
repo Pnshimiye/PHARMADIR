@@ -1,14 +1,16 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 class Pharmacy(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     name = models.CharField(max_length = 100)
     area = models.CharField(max_length=50)     
-    longitude = models.IntegerField() 
-    latitude = models.IntegerField() 
+    # location = GIS.PointField()
     image = models.ImageField(upload_to='')
     phone_number = models.IntegerField()
     email_address = models.EmailField() 
 
+    def __unicode__(self):
+        return self.user.email
 
     def save_pharmacy(self):
         self.save()  

@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'bootstrap3' 
+    'bootstrap3',
+  
 ]
 
 MIDDLEWARE = [
@@ -127,4 +128,4 @@ STATIC_ROOT = os.path.join(REPOSITORY_ROOT, 'static/')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(REPOSITORY_ROOT, 'media/')
 
-LOGIN_REDIRECT='pharmacy'
+AUTH_PROFILE_MODULE = 'accounts.UserProfile'

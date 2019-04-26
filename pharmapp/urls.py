@@ -4,9 +4,9 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns=[
-   
-    url('^$',views.pharmacy,name='pharmacy'),
-    # url(r'^search/', views.search_results,name='search_results'),
+    url(r'^$', views.profile,name='profile'),
+    url('^profile/',views.pharmacy,name='pharmacy'),
+    
     # url(r'^place/', views.location,name='locations'),
     # url(r'^image/(\d+)',views.single_images,name ='images')
 ]
