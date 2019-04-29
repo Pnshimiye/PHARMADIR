@@ -6,7 +6,7 @@ from .models import Pharmacy
 
 @login_required(login_url='/accounts/login/')
 def profile(request):
-  pharmacy = Pharmacy.objects.get()
+  pharmacy = Pharmacy.objects.get(name_id=id)
   return render(request, 'profile.html',{'pharmacy':pharmacy})
 
 def pharmacy(request):

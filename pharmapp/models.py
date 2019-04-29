@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 class Pharmacy(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,primary_key=True)
     name = models.CharField(max_length = 100)
     area = models.CharField(max_length=50)     
     # location = GIS.PointField()
@@ -10,7 +9,7 @@ class Pharmacy(models.Model):
     email_address = models.EmailField() 
 
     def __unicode__(self):
-        return self.user.email
+        return self.name
 
     def save_pharmacy(self):
         self.save()  
