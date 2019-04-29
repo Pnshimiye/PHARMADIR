@@ -57,7 +57,7 @@ class Request(models.Model):
     Request_date = models.DateTimeField(auto_now_add=True)
 
 
-    def save_medecine(self):
+    def save_request(self):
         self.save()
     
   
