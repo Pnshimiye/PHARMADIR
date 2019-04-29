@@ -31,9 +31,10 @@ class Medicine(models.Model):
     name = models.CharField(max_length=50)  
     med_category = models.ForeignKey(Med_category)
     price = models.IntegerField()
+    pharmacy = models.ManyToManyField(Pharmacy) 
 
-    # class Meta:
-    #     ordering = ('name',)
+
+ 
 
     def save_medecine(self):
         self.save()
