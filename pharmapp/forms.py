@@ -6,4 +6,4 @@ from .models import Pharmacy
 class PharmacyForm(forms.ModelForm):
     class Meta:
         model = Pharmacy
-        exclude = []
+        exclude = ['user']

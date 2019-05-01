@@ -1,8 +1,8 @@
-{%extends 'registration/base.html'%} {% load bootstrap3 %} {% load static %} {%
-block content %}
+{%extends 'base.html'%} {% load bootstrap3 %} {% block content %}
+
 <div class="column">
   <div class="card">
-    {% if pharmacy %}
+    {% for pharmacy in pharmacy%}
     <h2>Pharmacy name : {{ pharmacy.name }}</h2>
     <p>Around : {{ pharmacy.area }}</p>
     <div
@@ -15,4 +15,4 @@ block content %}
     <p>Email_address : {{ pharmacy.email_address }}</p>
   </div>
 </div>
-{% endif %}
+{% endif %} {%endblock%}

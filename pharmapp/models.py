@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+
 class Pharmacy(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
     name = models.CharField(max_length = 100)
     area = models.CharField(max_length=50)     
     # location = GIS.PointField()
@@ -8,16 +10,24 @@ class Pharmacy(models.Model):
     phone_number = models.IntegerField()
     email_address = models.EmailField() 
 
-    def __unicode__(self):
+    def __str__(self):
         return self.name
 
     def save_pharmacy(self):
-        self.save()  
+        self.save()
+
+    def delete_pharmacy(self):
+        self.delete()
 
     @classmethod
-    def update_pharmacy(cls, update):
-        pass
+    def get_by_id(cls):
+        pharmacy = cls.objects.get(user=id)
+        return pharmacy
  
+    def update_pharmacy(self,bio):
+        self.pharmacy = pharmacy
+        self.save()
+        
 class Insurance(models.Model):
     name = models.CharField(max_length=50)  
     pharmacy = models.ManyToManyField(Pharmacy)

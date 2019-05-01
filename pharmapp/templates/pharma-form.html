@@ -1,5 +1,4 @@
-{%extends 'registration/base.html'%} {% load bootstrap3 %} {% load staticfiles
-%} {% block content %}
+{%extends 'base.html'%} {% load bootstrap3 %} {% block content %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -12,7 +11,7 @@
   <body>
     <div class="container">
       <form
-        action="{%url 'profile'%}"
+        action="{%url 'create_pharmacy'%}"
         method="post"
         enctype="multipart/form-data"
       >
