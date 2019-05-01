@@ -23,7 +23,6 @@ class Pharmacy(models.Model):
         return pharmacy
 
 
-
     @classmethod
     def update_pharmacy(cls, update):
         pass
@@ -43,6 +42,7 @@ class Medicine(models.Model):
     med_category = models.CharField(max_length=50)  
     price = models.IntegerField()
     pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
+    in_stock = models.BooleanField(default=True)
 
     # class Meta:
     #     ordering = ('name',)

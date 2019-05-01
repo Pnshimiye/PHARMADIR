@@ -40,10 +40,12 @@ def home(request):
 def view_pharmacy(request):
     current_user = request.user
     pharmacy = Pharmacy.objects.get(user = current_user.id)
-    # medicines =  Medicine.objects.get (pharmacy=pharmacy)
-    medicines = Medicine.get_pharmacy_medicines(pharmacy.user_id)
+    medicines =  Medicine.objects.filter(pharmacy=pharmacy)
+    # medicines = Medicine.get_pharmacy_medicines(pharmacy.user_id)
     return render(request, 'profile.html',{'pharmacy':pharmacy,'medicines':medicines})
 
+
+@login_required(login_url='/accounts/login/')
 def create_pharmacy(request):
    current_user = request.user
    if request.method == 'POST':
@@ -59,11 +61,12 @@ def create_pharmacy(request):
 
 def create_medecines(request):
    current_user = request.user
+   pharmacy= Pharmacy.objects.get(user=current_user)
    if request.method == 'POST':
         form = MedicineForm(request.POST, request.FILES)
         if form.is_valid():
             medicines = form.save(commit=False)
-            medicines.user = current_user
+            medicines.pharmacy = pharmacy
             medicines.save()
         return redirect('view_pharmacy')
    else:
@@ -73,7 +76,7 @@ def create_medecines(request):
 @login_required(login_url='/accounts/login/')
 def view_medecines(request):
     current_user = request.user
-    medecines = Medecine.objects.get(user = current_user.id)
+    medicines = Medicine.objects.get(user = current_user.id)
     return render(request, 'profile.html',{'pharmacy':pharmacy})
 
 
