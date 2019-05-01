@@ -43,9 +43,11 @@ class Medicine(models.Model):
     price = models.IntegerField()
     pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
     in_stock = models.BooleanField(default=True)
+    
+    
 
-    # class Meta:
-    #     ordering = ('name',)
+    class Meta:
+        ordering = ('name',)
 
     def save_medecine(self):
         self.save()
