@@ -1,0 +1,35 @@
+{%extends 'base.html'%} {% load bootstrap4 %} {% load static %} 
+{%block content %}
+  <div class="column">
+    <div class="card">
+      <h1>Welcome to {{pharmacy.name}}</h1>
+      
+      {% if pharmacy %}
+      
+      <h2>Pharmacy name : {{ pharmacy.name }}</h2>
+      <p>Around : {{ pharmacy.area }}</p>
+      
+        <img src="{{ pharmacy.image.url }}" />
+      </div>
+      <p>Phone number : {{ pharmacy.phone_number }}</p>
+      <p>Email_address : {{ pharmacy.email_address }}</p>
+      
+    </div>
+  
+
+    
+  </div>
+  
+  <div class="column">
+     <h1>update your stock</h1>
+   
+  </div>
+  
+  {% endif %}
+  {% for med in medicines %}
+    
+  <h2>medicine name : {{med.name}}</h2>
+ 
+  {%endfor%}
+
+  {%endblock %}

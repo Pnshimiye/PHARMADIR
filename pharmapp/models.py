@@ -1,4 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User  
+from django.db.models import Q
+
 
 class Pharmacy(models.Model):
     name = models.CharField(max_length = 100)
@@ -8,10 +11,18 @@ class Pharmacy(models.Model):
     image = models.ImageField(upload_to='')
     phone_number = models.IntegerField()
     email_address = models.EmailField() 
+    user= models.OneToOneField(User,on_delete=models.CASCADE)
 
 
     def save_pharmacy(self):
-        self.save()  
+        self.save()
+
+    @classmethod
+    def get_by_id(cls, id):
+        pharmacy = Pharmacy.objects.get(user = id)
+        return pharmacy
+
+
 
     @classmethod
     def update_pharmacy(cls, update):
@@ -29,12 +40,12 @@ class Med_category(models.Model):
 
 class Medicine(models.Model):
     name = models.CharField(max_length=50)  
-    med_category = models.ForeignKey(Med_category)
+    med_category = models.CharField(max_length=50)  
     price = models.IntegerField()
-    pharmacy = models.ManyToManyField(Pharmacy) 
+    pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
 
-
- 
+    # class Meta:
+    #     ordering = ('name',)
 
     def save_medecine(self):
         self.save()
@@ -42,6 +53,11 @@ class Medicine(models.Model):
     @classmethod
     def update_price(cls, update):
         pass  
+
+    @classmethod
+    def get_pharmacy_medicines(cls,pharmacy):        
+        medicines = Medicine.objects.filter(pharmacy__pk = pharmacy)
+        return medicines
 
 
 
@@ -57,10 +73,32 @@ class Request(models.Model):
     Request_date = models.DateTimeField(auto_now_add=True)
 
 
-    def save_medecine(self):
+    def save_request(self):
         self.save()
     
   
+
+class PostManager(models.Manager):
+    def search(self, query=None):
+        qs = self.get_queryset()
+        if query is not None:
+            or_lookup = (Q(title__icontains=query) | 
+                         Q(description__icontains=query)|
+                         Q(slug__icontains=query)
+                        )
+            qs = qs.filter(or_lookup).distinct() # distinct() is often necessary with Q lookups
+        return qs
+
+    
+class Post(models.Model):
+    # user            = models.ForeignKey(settings.AUTH_USER_MODEL)
+    title           = models.CharField(max_length=120)
+    description     = models.TextField(null=True, blank=True)
+    slug            = models.SlugField(blank=True, unique=True)
+    publish_date    = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=True)
+    timestamp       = models.DateTimeField(auto_now_add=True)
+    
+    objects         = PostManager()
 
  
   
