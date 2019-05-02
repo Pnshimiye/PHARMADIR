@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import Pharmacy,Request,Medicine
+from .models import Pharmacy,Request,Medicine,Insurance
 
 
 
@@ -20,6 +20,11 @@ class PharmacyForm(forms.ModelForm):
 class MedicineForm(forms.ModelForm):
     class Meta:
         model = Medicine
+        exclude = ['pharmacy']
+
+class InsuranceForm(forms.ModelForm):
+    class Meta:
+        model = Insurance
         exclude = ['pharmacy']
 
      

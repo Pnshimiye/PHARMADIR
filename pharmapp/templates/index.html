@@ -10,33 +10,15 @@
     <title>PharmaDir </title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <link href="https://fonts.googleapis.com/css?family=Work+Sans:100,200,300,400,500,600,700,800,900" rel="stylesheet">
-
-    <link rel="stylesheet" href="static/css/open-iconic-bootstrap.min.css">
-    <link rel="stylesheet" href="static/css/animate.css">
-
-    <link rel="stylesheet" href="static/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="static/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="static/css/magnific-popup.css">
-
-    <link rel="stylesheet" href="static/css/aos.css">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="static/css/ionicons.min.css">
-
-    <link rel="stylesheet" href="static/css/bootstrap-datepicker.css">
-    <link rel="stylesheet" href="static/css/jquery.timepicker.css">
-
-
-    <link rel="stylesheet" href="static/css/flaticon.css">
-    <link rel="stylesheet" href="static/css/icomoon.css">
     <link rel="stylesheet" href="static/css/style.css">
-
-    <link rel="shortcut icon" href="media/logo/logo.png" type="image/png">
- 
- 
-   
+    <link rel="shortcut icon" href="media/logo/logo.png" type="image/png"> 
     
+ 
 </head>
 
 <body>
@@ -44,7 +26,7 @@
         <div class="container">
             <div class="row no-gutters d-flex align-items-start align-items-center px-3 px-md-0">
                 <div class="col-lg-2 pr-4 align-items-center">
-                    <a style="font-size:35px;" class="navbar-brand" href="index.html">Pharma<span>Dir</span></a>
+                    <a style="font-size:35px;" class="navbar-brand" href="/">Pharma<span>Dir</span></a>
                 </div>
                 <div class="col-lg-10 d-none d-md-block">
                     <div class="row d-flex">
@@ -67,58 +49,46 @@
  
     </nav>
  
-
-    <div class="col-sm-6 col-md-6">
-        {% if user.is_authenticated %}
-        <ul>
-    
-          <li class="dropdown">
-            <a href="#"
-            class="dropdown-toggle btn btn-default"
-            data-toggle="dropdown"
-            role="button"
-            aria-expanded="false"
-            >Account  
-            </a>
-            <ul class="dropdown-menu" role="menu">
-              <li>
-                <a href="{%url 'view_pharmacy'%}">Home</a>
-              </li>
-              <li>
-                <a href="{%url 'create_pharmacy'%}">create a profile</a>
-              </li>
-              <li>
-                <a href="/accounts/password/change">Change Password</a>
-              </li>
-              <li>
-                <a href="/logout">Logout</a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        {% else %}
-        <li>
-          <a class="btn btn-default" href="/accounts/login">Login</a>
-        </li>
-      
-        {% endif %}
-    </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco-navbar-light" id="ftco-navbar">
         <div class="container d-flex align-items-center">
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="oi oi-menu"></span> Menu
           </button>
-            <p class="button-custom order-lg-last mb-0"><a href="{% url 'post_request' %}" class="btn btn-secondary py-2 px-3">FOR PHARMACIES ONLY</a></p>
+          <div class="dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        FOR PHARMACIES ONLY
+                </button>
+                <div class="dropdown-menu">
+                  <a class="dropdown-item" href="/accounts/login/">Signin</a>
+                  <a class="dropdown-item" href="{%url 'post_request'%}">Request Account</a>
+                  
+                </div>
+              </div>
+        
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active"><a href="index.html" class="nav-link pl-0">Home</a></li>
+                    <li class="nav-item active"><a href="/" class="nav-link pl-0">Home</a></li>
                     <li class="nav-item"><a href="about.html" class="nav-link">About us</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item"><a href="#" class="nav-link">Contact</a></li>
 
                     <li>
-                        <div class="active-cyan-3 active-cyan-4 mb-4">
+                        <!-- <div class="active-cyan-3 active-cyan-4 mb-4">
                             <input class="form-control" type="text" placeholder="Search for Medicine" aria-label="Search">
-                        </div>
+                        </div> -->
+                        <div class="col-sm-4 col-md-4 navbar-right">
+
+                            <form class="navbar-form" role="search" action="{% url 'search_pharmacy' %}">
+                      
+                      
+                              <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search Pharmacy" name="medicine" style="margin-top:-80px">
+                                <div class="input-group-btn">
+                                  <button class="btn btn-default" type="submit"  style="margin-top:-127px"><i class="glyphicon glyphicon-search"></i></button>
+                                </div>
+                              </div>
+                      
+                            </form>
+                          </div>
                     </li>
 
                 </ul>
@@ -306,73 +276,12 @@
                 </div>
             </div>
         </section>
-
-
-        <footer class="ftco-footer ftco-bg-dark ftco-section">
-            <div class="container">
-                <div class="row mb-5">
-                    <div class="col-md">
-                        <div class="ftco-footer-widget mb-5">
-                            <h2 class="ftco-heading-2 logo">Pharma.<span>Dir</span></h2>
-                            <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-                        </div>
-                        <div class="ftco-footer-widget mb-5">
-                            <h2 class="ftco-heading-2">Have a Questions?</h2>
-                            <div class="block-23 mb-3">
-                                <ul>
-                                    <li><span class="icon icon-map-marker"></span><span class="text">Kimironko Street, Kigali Rwanda</span></li>
-                                    <li><a href="#"><span class="icon icon-phone"></span><span class="text">+250781449311</span></a></li>
-                                    <li><a href="#"><span class="icon icon-envelope"></span><span class="text">pharmadir@gmail.com</span></a></li>
-                                </ul>
-                            </div>
-
-                            <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
-                                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="ftco-footer-widget mb-5 ml-md-4">
-                            <h2 class="ftco-heading-2">Links</h2>
-                            <ul class="list-unstyled">
-                                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
-                                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>About us</a></li>
-                                <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>contact us</a></li>
-
-                            </ul>
-                        </div>
-                        <div class="ftco-footer-widget mb-5 ml-md-4">
-                            <!-- <h2 class="ftco-heading-2">Services</h2> -->
-                            <ul class="list-unstyled">
-                                <!-- <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Neurolgy</a></li> -->
-
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-md">
-                        <div class="ftco-footer-widget mb-5">
-                            <!-- <h2 class="ftco-heading-2">Recent Blog</h2> -->
-                            <div class="block-21 mb-4 d-flex">
-                                <!-- <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a> -->
-                                <div class="text">
-                                    <!-- <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3> -->
-                                    <div class="meta">
-                                        <!-- <div><a href="#"><span class="icon-calendar"></span> Dec 25, 2018</a></div>
-                                        <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                        <div><a href="#"><span class="icon-chat"></span> 19</a></div> -->
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="block-21 mb-5 d-flex">
-                                <!-- <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a> -->
-                                <div class="text">
-                                    <!-- <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3> -->
-                                    <div >
-
-                                    </div>
+                           
+</div>
                                     {%endblock%}
+                                    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   
                                 </body>
                                 </html>

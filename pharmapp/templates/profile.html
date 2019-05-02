@@ -9,6 +9,7 @@
       
       <h1>{{ pharmacy.name }}</h1>
       <h3>In {{ pharmacy.area }}</h3>
+      <a href="{% url 'create_pharmacy'%}"> Edit Profile</a>
       
         <img src="{{ pharmacy.image.url }}" />
       </div>
@@ -41,6 +42,14 @@
  
   {%endfor%}
 </div>
+<h2>Insurances</h2>
+  {% for comp in insurances %}
+  <ul>    
+  <li>  {{comp.name}}</li> 
+    
+   </ul>
+ 
+    {%endfor%}
 </div>
 
   {%endblock %}

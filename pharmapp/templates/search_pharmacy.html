@@ -1,0 +1,24 @@
+{%extends 'base.html'%}
+ 
+{%block content %}
+
+{%if pharmacy%} 
+<h2 style="color:white;">Found {{pharmacy|length }} of searched term {{message}}</h2>
+{% else %}
+ <h2> Found 0 image for the search term {{message}}</h2>
+
+
+{% endif%}
+{%if pharmacy%} 
+{% for pharmac in pharmacy%}
+<h3>{{ pharmac.name }}</h3>
+{% empty%}
+<p>No pharmacies with that med</p>
+{% endfor %}
+{%endif%}
+
+
+
+
+
+{%endblock%}

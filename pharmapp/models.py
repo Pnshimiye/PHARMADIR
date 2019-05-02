@@ -26,16 +26,44 @@ class Pharmacy(models.Model):
     @classmethod
     def update_pharmacy(cls, update):
         pass
+
+    
+    @classmethod
+    def get_pharmacy_medicines(cls,pharmacy):        
+        medicines = Medicine.objects.filter(pharmacy__pk = pharmacy)
+        return medicine
+    
+    @classmethod
+    def get_pharmacies_with_medicine(cls,medicine):
+        pharmacy = Pharmacy.objects.filter(medicine=medicine)
+        return pharmacy
+
  
+
+
 class Insurance(models.Model):
     name = models.CharField(max_length=50)  
-    pharmacy = models.ManyToManyField(Pharmacy)
+    pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
+
+
+    def save_insurances(self):
+        self.save()
+    
+    @classmethod
+    def update_insurance(cls, update):
+        pass  
+
+    @classmethod
+    def get_pharmacy_insurances(cls,pharmacy):        
+        insurances = Insurance.objects.filter(pharmacy__pk = pharmacy)
+        return insurances
+  
 
     
 
 class Med_category(models.Model):
      name = models.CharField(max_length=50)  
-
+    
 
 class Medicine(models.Model):
     name = models.CharField(max_length=50)  
@@ -43,7 +71,7 @@ class Medicine(models.Model):
     price = models.IntegerField()
     pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
     in_stock = models.BooleanField(default=True)
-    
+
     
 
     class Meta:
@@ -56,10 +84,10 @@ class Medicine(models.Model):
     def update_price(cls, update):
         pass  
 
-    @classmethod
-    def get_pharmacy_medicines(cls,pharmacy):        
-        medicines = Medicine.objects.filter(pharmacy__pk = pharmacy)
-        return medicines
+
+   
+
+  
 
 
 

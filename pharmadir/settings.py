@@ -46,6 +46,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+   
 ]
 
 MIDDLEWARE = [
@@ -141,4 +143,4 @@ STATICFILES_DIRS = (
 
 
 
-LOGIN_REDIRECT_URL = 'home'
+LOGIN_REDIRECT_URL = 'view_pharmacy'

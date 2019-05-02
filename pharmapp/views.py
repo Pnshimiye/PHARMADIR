@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
 from django.http  import HttpResponse,HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
-from .models import Medicine, Pharmacy,Request
+from .models import Medicine, Pharmacy,Request,Insurance
 from django.contrib.auth.models import User
-from .forms import MedicineForm, PharmacyForm, RequestForm
+from .forms import MedicineForm, PharmacyForm, RequestForm,InsuranceForm
 from django.contrib import messages
 from .email import send_welcome_email
 from itertools import chain
@@ -41,8 +41,10 @@ def view_pharmacy(request):
     current_user = request.user
     pharmacy = Pharmacy.objects.get(user = current_user.id)
     medicines =  Medicine.objects.filter(pharmacy=pharmacy)
+    insurances = Insurance.objects.filter(pharmacy=pharmacy)
+    print(insurances)
     # medicines = Medicine.get_pharmacy_medicines(pharmacy.user_id)
-    return render(request, 'profile.html',{'pharmacy':pharmacy,'medicines':medicines})
+    return render(request, 'profile.html',{'pharmacy':pharmacy,'medicines':medicines,'insurances':insurances})
 
 
 @login_required(login_url='/accounts/login/')
@@ -59,6 +61,52 @@ def create_pharmacy(request):
         form = PharmacyForm()
    return render(request, 'pharma-form.html', {"form": form})
 
+
+@login_required(login_url = '/accounts/login/')
+def search_pharmacy(request):
+
+    if 'medicine' in request.GET and request.GET["medicine"]:
+        search_term = request.GET.get("medicine")
+        # print(search_term)
+        # medicine = Medicine.objects.get(name=search_term)
+        print(medicine)
+        print(search_term)
+
+        searched_pharmacy = Pharmacy.get_pharmacies_with_medicine(medicine)
+        print(searched_pharmacy)
+        message = f"{search_term}"
+
+        return render(request, 'search_pharmacy.html',{"message":message,"pharmacy": searched_pharmacy})
+
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search_pharmacy.html',{"message":message})
+
+
+
+@login_required(login_url='/accounts/login/')
+def create_insurances(request):
+   current_user = request.user
+   pharmacy= Pharmacy.objects.get(user=current_user)
+   if request.method == 'POST':
+        form = InsuranceForm(request.POST, request.FILES)
+        if form.is_valid():
+            insurances = form.save(commit=False)
+            insurances.pharmacy = pharmacy
+            insurances.save()
+        return redirect('view_pharmacy')
+   else:
+        form = InsuranceForm()
+   return render(request, 'insurance-form.html', {"form": form})
+
+
+@login_required(login_url='/accounts/login/')
+def view_insurances(request):
+    current_user = request.user
+    insurances = Insurance.objects.get(user = current_user.id)
+    return render(request, 'profile.html',{'pharmacy':pharmacy})
+
+@login_required(login_url='/accounts/login/')
 def create_medecines(request):
    current_user = request.user
    pharmacy= Pharmacy.objects.get(user=current_user)
@@ -73,10 +121,12 @@ def create_medecines(request):
         form = MedicineForm()
    return render(request, 'medicines.html', {"form": form})
 
+
 @login_required(login_url='/accounts/login/')
 def view_medecines(request):
     current_user = request.user
     medicines = Medicine.objects.get(user = current_user.id)
+   
     return render(request, 'profile.html',{'pharmacy':pharmacy})
 
 
@@ -109,6 +159,6 @@ def get_queryset(self):
         qs = sorted(queryset_chain, 
                     key=lambda instance: instance.pk, 
                     reverse=True)
-        self.count = len(qs) # since qs is actually a list
+        self.count = len(qs) 
         return qs
-    return Post.objects.none() # just an empty queryset as default
+    return Post.objects.none() #
