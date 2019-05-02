@@ -42,8 +42,7 @@ def view_pharmacy(request):
     pharmacy = Pharmacy.objects.get(user = current_user.id)
     medicines =  Medicine.objects.filter(pharmacy=pharmacy)
     insurances = Insurance.objects.filter(pharmacy=pharmacy)
-    print(insurances)
-    # medicines = Medicine.get_pharmacy_medicines(pharmacy.user_id)
+    print(insurances)   
     return render(request, 'profile.html',{'pharmacy':pharmacy,'medicines':medicines,'insurances':insurances})
 
 
@@ -66,22 +65,37 @@ def create_pharmacy(request):
 def search_pharmacy(request):
 
     if 'medicine' in request.GET and request.GET["medicine"]:
-        search_term = request.GET.get("medicine")
-        # print(search_term)
-        # medicine = Medicine.objects.get(name=search_term)
-        print(medicine)
-        print(search_term)
-
-        searched_pharmacy = Pharmacy.get_pharmacies_with_medicine(medicine)
-        print(searched_pharmacy)
+        search_term = request.GET.get("medicine")     
+        medicine = Medicine.objects.filter(name=search_term).all()       
+        searched_pharmacy = None      
+        for i in medicine:
+            searched_pharmacy = Pharmacy.get_pharmacies_with_medicine(i.pharmacy.id)          
         message = f"{search_term}"
+        return render(request, 'search_pharmacy.html',{"message":message,"pharmacy": searched_pharmacy})
+    else:
+        message = "You haven't searched for any term"
+        return render(request, 'search_pharmacy.html',{"message":message})
+
+
+@login_required(login_url = '/accounts/login/')
+def search_pharmacy_insurance(request):
+    print("ok")
+    if 'insurance' in request.GET and request.GET["insurance"]:
+        search_term2 = request.GET.get("insurance")        
+        insurance = Insurance.objects.filter(name=search_term2).all()        
+        searched_pharmacy = None
+        print(insurance)
+        for i in insurance:
+            searched_pharmacy = Pharmacy.get_pharmacies_with_medicine(i.pharmacy.id)        
+        print(searched_pharmacy)
+        message = f"{search_term2}"
+
 
         return render(request, 'search_pharmacy.html',{"message":message,"pharmacy": searched_pharmacy})
 
     else:
         message = "You haven't searched for any term"
         return render(request, 'search_pharmacy.html',{"message":message})
-
 
 
 @login_required(login_url='/accounts/login/')
@@ -130,35 +144,3 @@ def view_medecines(request):
     return render(request, 'profile.html',{'pharmacy':pharmacy})
 
 
-class SearchView(ListView):
-    template_name = 'lookup.html'
-    paginate_by = 20
-    count = 0
-    
-def get_context_data(self, *args, **kwargs):
-    context = super().get_context_data(*args, **kwargs)
-    context['count'] = self.count or 0
-    context['query'] = self.request.GET.get('q')
-    return context
-
-def get_queryset(self):
-    request = self.request
-    query = request.GET.get('q', None)
-    
-    if query is not None:
-        blog_results        = Post.objects.search(query)
-        lesson_results      = Lesson.objects.search(query)
-        profile_results     = Profile.objects.search(query)
-        
-        # combine querysets 
-        queryset_chain = chain(
-                blog_results,
-                lesson_results,
-                profile_results
-        )        
-        qs = sorted(queryset_chain, 
-                    key=lambda instance: instance.pk, 
-                    reverse=True)
-        self.count = len(qs) 
-        return qs
-    return Post.objects.none() #

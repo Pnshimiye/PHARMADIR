@@ -13,12 +13,14 @@ class Pharmacy(models.Model):
     email_address = models.EmailField() 
     user= models.OneToOneField(User,on_delete=models.CASCADE)
 
+    
+
 
     def save_pharmacy(self):
         self.save()
 
     @classmethod
-    def get_by_id(cls, id):
+    def get_by_id(cls, id): 
         pharmacy = Pharmacy.objects.get(user = id)
         return pharmacy
 
@@ -31,11 +33,11 @@ class Pharmacy(models.Model):
     @classmethod
     def get_pharmacy_medicines(cls,pharmacy):        
         medicines = Medicine.objects.filter(pharmacy__pk = pharmacy)
-        return medicine
+        return medicines
     
     @classmethod
     def get_pharmacies_with_medicine(cls,medicine):
-        pharmacy = Pharmacy.objects.filter(medicine=medicine)
+        pharmacy = Pharmacy.objects.filter(id=medicine)
         return pharmacy
 
  
@@ -74,8 +76,7 @@ class Medicine(models.Model):
 
     
 
-    class Meta:
-        ordering = ('name',)
+ 
 
     def save_medecine(self):
         self.save()

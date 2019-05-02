@@ -13,6 +13,7 @@ urlpatterns=[
   url(r'^create_medecines/',views.create_medecines,name='create_medecines'),
   url(r'^create_insurances/',views.create_insurances,name='create_insurances'),
   url(r'^search_pharmacy/',views.search_pharmacy,name='search_pharmacy'),
+  url(r'^search_pharmacy_insurance/',views.search_pharmacy_insurance,name='search_pharmacy_insurance'),
  
      
 ]  
