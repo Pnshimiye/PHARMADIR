@@ -143,4 +143,4 @@ STATICFILES_DIRS = (
 
 
 
-LOGIN_REDIRECT_URL = 'view_pharmacy'
+LOGIN_REDIRECT_URL = 'home'

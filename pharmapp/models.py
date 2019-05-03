@@ -6,10 +6,10 @@ from django.db.models import Q
 class Pharmacy(models.Model):
     name = models.CharField(max_length = 100)
     area = models.CharField(max_length=50)     
-    longitude = models.IntegerField() 
-    latitude = models.IntegerField() 
+    longitude = models.FloatField() 
+    latitude = models.FloatField()  
     image = models.ImageField(upload_to='')
-    phone_number = models.IntegerField()
+    phone_number = models.CharField
     email_address = models.EmailField() 
     user= models.OneToOneField(User,on_delete=models.CASCADE)
 

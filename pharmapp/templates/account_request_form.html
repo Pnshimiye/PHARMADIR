@@ -2,6 +2,7 @@
 {% load bootstrap4 %}
 
 {% block content %}
+{% include "navbar.html" %}
 <div class="container top">
     <div class="row">
         <div class="col-md-8">
@@ -21,5 +22,5 @@
     {% endfor %}
 </ul>
 {% endif %}
- 
+{% include "footer.html" %} 
 {% endblock %}
