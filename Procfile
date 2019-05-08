@@ -1,0 +1,1 @@
+ web: gunicorn PHARMADIR.wsgi --log-file -
