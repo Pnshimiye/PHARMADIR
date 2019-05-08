@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% load bootstrap4 %}
+{%load static%}
+    
+    {% block content %}  
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>PharmaDir </title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="static/css/ionicons.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="shortcut icon" href="media/logo/logo.png" type="image/png"> 
+    
+ 
+</head>
+<body>
+ 
+
+
+
+
+<form class="navbar-form" role="search" action="{% url 'search_pharmacy_insurance' %}">
+
+
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="Search Image Category" name="insurance" style="margin-top:-80px">
+    <div class="input-group-btn">
+      <button class="btn btn-default" type="submit"  style="margin-top:-127px"><i class="glyphicon glyphicon-search"></i></button>
+    </div>
+  </div>
+
+</form>
+
+{%if pharmacy%} 
+<h2 style="color:blue;">Found {{pharmacy|length }} of searched term {{message}}</h2>
+{% else %}
+ <h2> Found 0 image for the search term {{message}}</h2>
+
+
+{% endif%}
+{%if pharmacy%} 
+{% for pharmac in pharmacy%}
+<h3>{{ pharmac.name }}</h3>
+{% empty%}
+<p>No pharmacies with that med</p>
+{% endfor %}
+{%endif%}
+{%endblock%}
+                                   
+</body>
+</html>

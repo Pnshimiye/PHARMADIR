@@ -8,28 +8,24 @@ from django.contrib import messages
 from .email import send_welcome_email
 from itertools import chain
 from django.views.generic import ListView
- 
+from .email import send_welcome_email
  
 def post_request(request):    
     if request.method == 'POST':
         form = RequestForm(request.POST, request.FILES)
         if  form.is_valid():
-            post = form.save(commit=False)                    
-            post.save()
-            name = form.cleaned_data['pharmacy']
-            email = form.cleaned_data['email']
-            recipient = NewsLetterRecipients(name = name,email =email)
-            recipient.save()
-            send_welcome_email(name,email)
+            request = form.save(commit=False)
+            request.save()
+            name = request.Pharmacy_name
+            email = request.Contact_Email
+            send_welcome_email(name, email)
             HttpResponseRedirect('home')
             return redirect('home')
   
     else:
         form =RequestForm()
-    messages.info(request, 'Your request has been posted successfully. Please while out team review it, we will get back to you in the next 24 hours')
+    return render(request, 'account_request_form.html',{'form':form})
     
-    return render(request, 'account_request_form.html', {'form':form})
-
 def home(request): 
     title = 'Home' 
     pharmacy = Pharmacy.objects.filter()
@@ -61,7 +57,7 @@ def create_pharmacy(request):
    return render(request, 'pharma-form.html', {"form": form})
 
 
-@login_required(login_url = '/accounts/login/')
+ 
 def search_pharmacy(request):
 
     if 'medicine' in request.GET and request.GET["medicine"]:
@@ -76,8 +72,7 @@ def search_pharmacy(request):
         message = "You haven't searched for any term"
         return render(request, 'search_pharmacy.html',{"message":message})
 
-
-@login_required(login_url = '/accounts/login/')
+ 
 def search_pharmacy_insurance(request):
     print("ok")
     if 'insurance' in request.GET and request.GET["insurance"]:
@@ -91,11 +86,11 @@ def search_pharmacy_insurance(request):
         message = f"{search_term2}"
 
 
-        return render(request, 'search_pharmacy.html',{"message":message,"pharmacy": searched_pharmacy})
+        return render(request, 'search_insurance.html',{"message":message,"pharmacy": searched_pharmacy})
 
     else:
         message = "You haven't searched for any term"
-        return render(request, 'search_pharmacy.html',{"message":message})
+        return render(request, 'search_insurance.html',{"message":message})
 
 
 @login_required(login_url='/accounts/login/')
@@ -142,5 +137,3 @@ def view_medecines(request):
     medicines = Medicine.objects.get(user = current_user.id)
    
     return render(request, 'profile.html',{'pharmacy':pharmacy})
-
-

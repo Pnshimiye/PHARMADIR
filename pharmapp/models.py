@@ -9,7 +9,7 @@ class Pharmacy(models.Model):
     longitude = models.FloatField() 
     latitude = models.FloatField()  
     image = models.ImageField(upload_to='')
-    phone_number = models.CharField
+    phone_number = models.CharField(max_length=12)
     email_address = models.EmailField() 
     user= models.OneToOneField(User,on_delete=models.CASCADE)
 

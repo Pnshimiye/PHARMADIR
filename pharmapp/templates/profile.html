@@ -1,56 +1,92 @@
 {%extends 'base.html'%}
  {% load bootstrap4 %} {% load static %} 
 {%block content %}
-  <div class= "jumbotron">
+{% include 'navbar.html' %}
+<nav class="navbar py-4 navbar-expand-lg ftco_navbar navbar-light bg-light flex-row">
+    <div class="container">
+        <div class="row no-gutters d-flex align-items-start align-items-center px-3 px-md-0">
+            <div class="col-lg-2 pr-4 align-items-center">
+                <a style="font-size:35px;" class="navbar-brand" href="/">Pharma<span>Dir</span></a>
+            </div>
+            <div class="col-lg-10 d-none d-md-block">
+                <div class="row d-flex">
+                    <div class="col-md-4 pr-4 d-flex topper align-items-center">
+                        <div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-map"></span></div>
+                        <span class="text">Address: Kimironko Street, Kigali Rwanda</span>
+                    </div>
+                    <div class="col-md pr-4 d-flex topper align-items-center">
+                        <div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-paper-plane"></span></div>
+                        <span class="text">Email: pharmadir@gmail.com</span>
+                    </div>
+                    <div class="col-md pr-4 d-flex topper align-items-center">
+                        <div class="icon bg-white mr-2 d-flex justify-content-center align-items-center"><span class="icon-phone2"></span></div>
+                        <span class="text">Phone: + 250781449311</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+  <div class= "jumbotron"style="background-color:rgb(117, 170, 255);">
     <div class="card">
       
       
       {% if pharmacy %}
       
-      <h1>{{ pharmacy.name }}</h1>
-      <h3>In {{ pharmacy.area }}</h3>
-      <a href="{% url 'create_pharmacy'%}"> Edit Profile</a>
+      <h1 style="text-align:center; font-weight:bolder;">{{ pharmacy.name }}</h1>
+      <h3 style="text-align:center; font-weight:bolder;">In {{ pharmacy.area }}</h3>
       
-        <img src="{{ pharmacy.image.url }}" />
-      </div>
-      <h3>Contacts</h3>
-      <p>Phone number : {{ pharmacy.phone_number }}</p>
-      <p>Email_address : {{ pharmacy.email_address }}</p>
-      <a href="https://www.google.com/maps/search/?api=1&query={{pharmacy.longitude}},{{pharmacy.latitude}}">Find us</a>
+     
+      
+     
+        <center>
+            <img src="{{ pharmacy.image.url }}" style="height:300px;width:400px"/><p>Phone number : {{ pharmacy.phone_number }}</p>
+          <p>Email_address : {{ pharmacy.email_address}}</p> 
+         <a href="https://www.google.com/maps/search/?api=1&query={{pharmacy.longitude}},{{pharmacy.latitude}}">Location</a>
+         <a href="{% url 'create_pharmacy'%}"> Edit Profile</a>
+        </center>
+        <p>{{ pharmacy.longitude }}  {{ pharmacy.latitude }}</p>
+        </div>
+     
       
     </div>
   
-  <div class="container">
-    
+<div class="container">
    
-  <div class="column">
-     <center><h1>Stock</h1></center><br><br><br>
-   
-  </div>
-  
-  {% endif %}
-  <div class="col-sm-6">
-  {% for med in medicines %}
-  <ul>
+
+ <div class="row">
+  <div class="col-md-6">
+      <h1>MEDICINES</h1>
+       <button ><h6><a href="{% url 'create_medecines'%}">update your Stock</a></h6></button>
+       {% endif %}
+       <div class="col-sm-6">
+       {% for med in medicines %}
+     
     
-  <li>Name: {{med.name}}</li>
-  <p>Category: {{med.med_category}}</p>
-  <p>{{med.in_stock}}</p>
-  
-   
+            <p>Name: {{med.name}}</p>
+           <div class="panel-body">  
+             <p>Category: {{med.med_category}}</p>
+             <p>Price: {{med.price}} RWF</p>
     
-   </ul>
- 
   {%endfor%}
-</div>
-<h2>Insurances</h2>
+   
+<h1>INSURANCES</h1>
+<button><h6><a href="{% url 'create_insurances'%}">Add an Insurance</a></h6></button> 
   {% for comp in insurances %}
-  <ul>    
-  <li>  {{comp.name}}</li> 
+
+     
+ <p>  {{comp.name}}</p> 
+ 
+     
+   
+
     
-   </ul>
+  
  
     {%endfor%}
-</div>
+  
+
 
   {%endblock %}
+  
