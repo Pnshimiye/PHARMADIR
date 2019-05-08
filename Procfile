@@ -1,1 +1,1 @@
- web: gunicorn PHARMADIR.wsgi --log-file -
+ web: gunicorn pharmadir.wsgi --log-file -
