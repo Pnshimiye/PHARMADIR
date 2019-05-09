@@ -1,13 +1,61 @@
 {%extends 'base.html'%}
  {% load bootstrap4 %} {% load static %} 
+
+
  <body>
+ 
+  
 
 {% include 'navbar.html' %}
 {%block content%}
 
+<nav class="navbar navbar-expand-sm bg-light" id="ftco-navbar" >
+         
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="oi oi-menu"></span> Menu
+  </button>
+  
+
+    <div class="collapse navbar-collapse" id="ftco-nav">
+            <div class="col-lg-2 pr-4 align-items-center">
+                    <a style="font-size:35px; color:rgb(0, 0, 0)" class="navbar-brand" href="/">Pharma<span style = "color:rgb(31,109,158)">Dir</span></a>
+                </div>
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active"><a  style ="color:rgb(39, 119, 172);font-size:30px;font-weight: bolder"href="/" class="nav-link pl-0">Home</a></li>
+            <li class="nav-item"><a   style ="color:rgb(39, 119, 172);font-size:30px;font-weight: bolder"href="about.html" class="nav-link">About us</a></li>
+            <li class="nav-item"><a  style ="color:rgb(39, 119, 172);font-size:30px;font-weight: bolder" href="#" class="nav-link">Contact</a></li>
+        </ul>
+            <div class="dropdown" style ="float:right; float:right;border:blac">
+                    <button type="button" class="btn dropdown-toggle" data-toggle="dropdown" style ="float:right;margin-right:10%;font-weight: bold ;border:2px solid rgb(31,109,158);width:300px;height:50px;margin-left:-20px;font-family: monospace">
+                            For Pharmacies Only
+                    </button>
+                    <div class="dropdown-menu"style ="margin-left:10px;padding:-20px;">
+                      <a class="dropdown-item" href="/accounts/login/">Signin</a>
+                      <a class="dropdown-item" href="{%url 'post_request'%}">Request Account</a>
+                      
+                            <a class="dropdown-item" href="{%url 'home'%}">Home</a>
+                           
+                            <a class="dropdown-item" href="/accounts/password/change">Change Password</a>
+                           
+                            
+                            <a  class="dropdown-item"href="{% url 'view_pharmacy'%}">Pharmacy Profile</a>
+                            <a  class="dropdown-item"href="/logout">Logout</a>
+                           
+                    </div>
+                  </div>
+
+             
+            
+
+    
+    </div>
+</div>
+
+</nav>
+
 
  <center>
-   <div class ="jumbotron" style="background-color:rgb(108, 188, 253)">
+   <div class ="jumbotron-fluid" style="background-color:rgb(36, 72, 102);color:whitesmoke" >
 
 {%if pharmacy%} 
 <!-- <h2 style="color:black;">Found {{pharmacy|length }} of searched term {{message}}</h2> -->
@@ -25,8 +73,8 @@
 </h3>
 <h4>{{ pharmac.name }}</h4>
 <h4>{{ pharmac.area }}</h4>
-<a href="https://www.google.com/maps/search/?api=1&query={{pharmac.longitude}},{{pharmac.latitude}}"target="blank">Find {{ pharmac.name }} </a>
-<p>{{pharmac.longitude}},{{pharmac.latitude}}</p>
+<a href="https://www.google.com/maps/search/?api=1&query={{pharmac.longitude}},{{pharmac.latitude}}"target="blank" style="color:rgb(38, 151, 151)">Find {{ pharmac.name }} </a>
+ 
 {% empty%}
 <p>No pharmacies with that med</p>
 {% endfor %}
@@ -62,6 +110,7 @@
 
 
 {%endblock%}
+</div>
                                    
 </body>
 </html>
