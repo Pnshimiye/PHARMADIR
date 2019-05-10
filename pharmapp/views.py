@@ -62,12 +62,15 @@ def search_pharmacy(request):
 
     if 'medicine' in request.GET and request.GET["medicine"]:
         search_term = request.GET.get("medicine")     
-        medicine = Medicine.objects.filter(name=search_term).all()       
+        medicine = Medicine.objects.filter(name=search_term).all()
+        print(medicine)    
         searched_pharmacy = None      
         for i in medicine:
             searched_pharmacy = Pharmacy.get_pharmacies_with_medicine(i.pharmacy.id)          
         message = f"{search_term}"
+        print(searched_pharmacy)
         return render(request, 'search_pharmacy.html',{"message":message,"pharmacy": searched_pharmacy})
+        
     else:
         message = "You haven't searched for any term"
         return render(request, 'search_pharmacy.html',{"message":message})

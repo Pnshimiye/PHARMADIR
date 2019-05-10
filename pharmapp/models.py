@@ -1,6 +1,27 @@
 from django.db import models
 from django.contrib.auth.models import User  
 from django.db.models import Q
+from django.contrib.postgres.fields import ArrayField
+
+class Insurance(models.Model):
+    name = models.CharField(max_length=50)  
+  
+    def __str__(self):
+        return self.name
+
+    def save_insurances(self):
+        self.save()
+    
+    @classmethod
+    def update_insurance(cls, update):
+        pass  
+
+    @classmethod
+    def get_pharmacy_insurances(cls,pharmacy):        
+        insurances = Insurance.objects.filter(pharmacy__pk = pharmacy)
+        return insurances
+  
+
 
 
 class Pharmacy(models.Model):
@@ -12,8 +33,12 @@ class Pharmacy(models.Model):
     phone_number = models.CharField(max_length=12)
     email_address = models.EmailField() 
     user= models.OneToOneField(User,on_delete=models.CASCADE)
+    # test = models.ManyToManyField(Insurance)
+    insurances = ArrayField(models.CharField(max_length=500, null=True))
 
-    
+
+    def __str__(self):
+        return self.name
 
 
     def save_pharmacy(self):
@@ -39,32 +64,13 @@ class Pharmacy(models.Model):
     def get_pharmacies_with_medicine(cls,medicine):
         pharmacy = Pharmacy.objects.filter(id=medicine)
         return pharmacy
-
- 
-
-
-class Insurance(models.Model):
-    name = models.CharField(max_length=50)  
-    pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
-
-
-    def save_insurances(self):
-        self.save()
-    
-    @classmethod
-    def update_insurance(cls, update):
-        pass  
-
-    @classmethod
-    def get_pharmacy_insurances(cls,pharmacy):        
-        insurances = Insurance.objects.filter(pharmacy__pk = pharmacy)
-        return insurances
-  
-
     
 
 class Med_category(models.Model):
-     name = models.CharField(max_length=50)  
+        name = models.CharField(max_length=50)  
+
+        def __str__(self):
+            return self.name
     
 
 class Medicine(models.Model):
@@ -72,24 +78,17 @@ class Medicine(models.Model):
     med_category = models.CharField(max_length=50)  
     price = models.IntegerField()
     pharmacy = models.ForeignKey(Pharmacy,on_delete=models.CASCADE) 
-    in_stock = models.BooleanField(default=True)
+    in_stock = models.BooleanField(default=True)   
 
-    
-
- 
+    def __str__(self):
+        return self.name
 
     def save_medecine(self):
         self.save()
     
     @classmethod
     def update_price(cls, update):
-        pass  
-
-
-   
-
-  
-
+        pass 
 
 
 class Request(models.Model):    
@@ -103,33 +102,35 @@ class Request(models.Model):
     Address = models.CharField(max_length=50) 
     Request_date = models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.name
 
     def save_request(self):
         self.save()
     
   
 
-class PostManager(models.Manager):
-    def search(self, query=None):
-        qs = self.get_queryset()
-        if query is not None:
-            or_lookup = (Q(title__icontains=query) | 
-                         Q(description__icontains=query)|
-                         Q(slug__icontains=query)
-                        )
-            qs = qs.filter(or_lookup).distinct() # distinct() is often necessary with Q lookups
-        return qs
+# class PostManager(models.Manager):
+#     def search(self, query=None):
+#         qs = self.get_queryset()
+#         if query is not None:
+#             or_lookup = (Q(title__icontains=query) | 
+#                          Q(description__icontains=query)|
+#                          Q(slug__icontains=query)
+#                         )
+#             qs = qs.filter(or_lookup).distinct() # distinct() is often necessary with Q lookups
+#         return qs
 
     
-class Post(models.Model):
-    # user            = models.ForeignKey(settings.AUTH_USER_MODEL)
-    title           = models.CharField(max_length=120)
-    description     = models.TextField(null=True, blank=True)
-    slug            = models.SlugField(blank=True, unique=True)
-    publish_date    = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=True)
-    timestamp       = models.DateTimeField(auto_now_add=True)
+# class Post(models.Model):
+#     # user            = models.ForeignKey(settings.AUTH_USER_MODEL)
+#     title           = models.CharField(max_length=120)
+#     description     = models.TextField(null=True, blank=True)
+#     slug            = models.SlugField(blank=True, unique=True)
+#     publish_date    = models.DateTimeField(auto_now_add=False, auto_now=False, null=True, blank=True)
+#     timestamp       = models.DateTimeField(auto_now_add=True)
     
-    objects         = PostManager()
+#     objects         = PostManager()
 
  
   
